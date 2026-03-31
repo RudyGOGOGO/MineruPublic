@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(make config:*)",
+      "Bash(make check:*)",
+      "Bash(brew install:*)",
+      "Bash(export PATH=\"/opt/homebrew/opt/node@22/bin:$PATH\")",
+      "Bash(pnpm --version)",
+      "Bash(nginx -v)",
+      "Bash(make install:*)"
+    ]
+  }
+}
