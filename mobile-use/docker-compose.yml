@@ -1,0 +1,54 @@
+services:
+  ui-auto-full-ip:
+    image: mineru/ui-auto:latest
+    container_name: ui-auto-full
+    user: "ui-auto:ui-auto"
+    restart: no
+    env_file:
+      - .env
+    environment:
+      ADB_CONNECT_ADDR: "${ADB_CONNECT_ADDR}"
+      RESULTS_OUTPUT_PATH: "/home/ui-auto/results.txt"
+      EVENTS_OUTPUT_PATH: "/home/ui-auto/events.json"
+    volumes:
+      - ui-auto-adb-keys:/home/ui-auto/.android
+      - ./llm-config.override.jsonc:/app/llm-config.override.jsonc
+
+  ui-auto-full-usb:
+    image: mineru/ui-auto:latest
+    container_name: ui-auto-full-usb
+    user: "ui-auto:ui-auto"
+    restart: no
+    env_file:
+      - .env
+    privileged: true
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"
+    environment:
+      RESULTS_OUTPUT_PATH: "/home/ui-auto/results.txt"
+      EVENTS_OUTPUT_PATH: "/home/ui-auto/events.json"
+    volumes:
+      - ui-auto-adb-keys:/home/ui-auto/.android
+      - ./llm-config.override.jsonc:/app/llm-config.override.jsonc
+
+  ui-auto-ip:
+    container_name: ui-auto
+    user: "ui-auto:ui-auto"
+    restart: no
+    build:
+      context: .
+      dockerfile: slim.Dockerfile
+    env_file:
+      - .env
+    environment:
+      ADB_CONNECT_ADDR: "${ADB_CONNECT_ADDR}"
+      RESULTS_OUTPUT_PATH: "/home/ui-auto/results.txt"
+      EVENTS_OUTPUT_PATH: "/home/ui-auto/events.json"
+      MOBILE_USE_HEALTH_RETRIES: "150"
+      MOBILE_USE_HEALTH_DELAY: "2"
+    volumes:
+      - ui-auto-adb-keys:/home/ui-auto/.android
+      - ./llm-config.override.jsonc:/app/llm-config.override.jsonc
+
+volumes:
+  ui-auto-adb-keys:
