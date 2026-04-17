@@ -1,1 +1,0 @@
-DEFAULT_PROFILE_NAME = "default"

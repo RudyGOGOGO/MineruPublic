@@ -1,3 +1,0 @@
-[
-  "[orchestrator] Starting the first subgoal: - [ID:cl7pca]: Open the Settings app using launch_app : \u23f3."
-]
